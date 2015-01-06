@@ -1,7 +1,3 @@
-.idea
-composer.phar
-vendor
-.DS_Store
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
@@ -9,9 +5,9 @@ vendor
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
+/app/phpunit.xml
 /build/
 /vendor/
 /bin/
-/composer.phar
 /.idea
-composer.lock
+/composer.phar
