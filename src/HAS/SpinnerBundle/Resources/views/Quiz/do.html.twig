@@ -1,0 +1,210 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="page-header">
+                    <h1>
+                        Example page header
+                        <small>Subtext for header</small>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="tabbable" id="tabs-989870">
+                    <ul class="nav nav-tabs">
+                        {% for section in sections %}
+                            <li {% if loop.first %}class="active"{% endif %}>
+                                <a href="#panel-{{ section.id }}" data-toggle="tab">{{ section.title }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <li>
+                            <a href="#panel-total" data-toggle="tab">Soll-Ist-Vergleich</a>
+                        </li>
+                        <li>
+                            <a href="#panel-spinner" data-toggle="tab" data-quiz-spinner-toggler>Spinne</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        {% for section in sections %}
+                        <div class="tab-pane {% if loop.first %}active{% endif %}" id="panel-{{ section.id }}"
+                             data-quiz-section-container
+                             data-quiz-section-result=""
+                             data-quiz-section="{{ section.id }}">
+                            {% for category in section.categories %}
+                                <div class="row clearfix">
+                                    <div class="col-md-12 column"
+                                         data-quiz-category-container
+                                         data-quiz-category="{{ category.id }}"
+                                         data-quiz-category-title="{{ category.title }}"
+                                         data-quiz-category-result="">
+                                        <h2>{{ category.title }} (Score <span
+                                                    data-quiz-category-result-container
+                                                    data-quiz-category="{{ category.id }}"></span>%)</h2>
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th width="60%">Question</th>
+                                                <th width="20%">Weight</th>
+                                                <th width="20%">Value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for question in category.questions %}
+                                                <tr>
+                                                    <td>{{ question.text }}</td>
+                                                    <td>{{ question.weight }}%</td>
+                                                    <td>
+                                                        <select name="question_{{ question.id }}"
+                                                                data-quiz-question="{{ question.id }}"
+                                                                data-quiz-weight="{{ question.weight }}">
+                                                            {% for i in 0..10 %}
+                                                                <option value="{{ i*10 }}" {% if i*10 == question.value %}selected{% endif %}>
+                                                                    {{ i*10 }}%
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <hr/>
+                            <h2>Score: <span 
+                                        data-quiz-section-result-container 
+                                        data-quiz-section="{{ section.id }}"></span>%</h2>
+                        </div>
+                        {% endfor %}
+
+                        <div class="tab-pane" id="panel-total">
+                            {% for section in sections %}
+                            <h2>{{ section.title }}</h2>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th width="60%">Category</th>
+                                    <th width="20%">Max possible</th>
+                                    <th width="20%">Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for category in section.categories %}
+                                <tr>
+                                    <td>{{ category.title }}</td>
+                                    <td>100%</td>
+                                    <td><span
+                                                data-quiz-category-result-container
+                                                data-quiz-category="{{ category.id }}"></span>%</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endfor %}
+                        </div>
+
+                        <div class="tab-pane" id="panel-spinner" data-quiz-spinner-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/Chart.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Bind quiz related events to selects
+            $('select[data-quiz-question]').on('change.quiz', function () {
+                // Find category container
+                var categoryContainer = $(this).closest('*[data-quiz-category]');
+                // Find all questions and calculate their input
+                var score = 0;
+                categoryContainer.find('select[data-quiz-question]').each(function () {
+                    score += $(this).val() * $(this).data('quiz-weight') / 100;
+                });
+                // Update category score
+                $('*[data-quiz-category-result-container][data-quiz-category='+categoryContainer.data('quiz-category')+']').text(Math.round(score));
+                categoryContainer.data('quiz-category-result', Math.round(score));
+
+                // Find section container
+                var sectionContainer = categoryContainer.closest('*[data-quiz-section]');
+                // Find all questions and calculate their input
+                score = 0;
+                sectionContainer.find('select[data-quiz-question]').each(function () {
+                    score += $(this).val() * $(this).data('quiz-weight') / 100;
+                });
+                // Count categories and divide the score correspondingly
+                score /= sectionContainer.find('*[data-quiz-category-container]').length;
+                // Update section score
+                $('*[data-quiz-section-result-container][data-quiz-section='+sectionContainer.data('quiz-section')+']').text(Math.round(score));
+                sectionContainer.data('quiz-section-result', Math.round(score));
+            });
+
+            // Calculates scores initially
+            // well we don't care to much for optimisation now so we will trigger for all selects
+            // though it is only needed to trigger once per category
+            $('select[data-quiz-question]').trigger('change.quiz');
+
+            $('*[data-quiz-spinner-toggler]').on('click.quiz', function(){
+                // Delay to be sure the tab opens
+                setTimeout(function(){
+                    // Clear container
+                    $('*[data-quiz-spinner-container]').empty();
+                    // Add square full width canvas to container
+                    var canvas = $('<canvas width="'+$('*[data-quiz-spinner-container]').width()+'" height="'+$('*[data-quiz-spinner-container]').width()+'">');
+                    var ctx = $(canvas).get(0).getContext('2d');
+                    $('*[data-quiz-spinner-container]').append(canvas);
+
+                    // Prepare data var stub
+                    var data = {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: "Current",
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "rgba(220,220,220,1)",
+                                pointColor: "rgba(220,220,220,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                data: []
+                            },
+                            {
+                                label: "Ideal",
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "rgba(220,220,220,1)",
+                                pointColor: "rgba(220,220,220,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                data: []
+                            }
+                        ]
+                    };
+                    // Collect data to display
+                    $('*[data-quiz-category-container]').each(function(){
+                        data.labels.push($(this).data('quiz-category-title'));
+                        data.datasets[0].data.push($(this).data('quiz-category-result'));
+                        data.datasets[1].data.push(100);
+                    });
+                    console.log(data);
+                    // Draw the spinner
+                    options = {
+                        animation: false,
+                    };
+                    var chartRadar = new Chart(ctx).Radar(data, options);
+                }.bind(this), 100);
+            });
+        });
+    </script>
+{% endblock %}
