@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "590d435acce163c086a0f8756182d1dc",
+    "hash": "eaa3fdaf39a327a320e9615978a68466",
     "packages": [
         {
             "name": "braincrafted/bootstrap-bundle",
@@ -350,6 +350,62 @@
             "time": "2014-05-21 19:28:51"
         },
         {
+            "name": "doctrine/data-fixtures",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/data-fixtures.git",
+                "reference": "b4a135c7db56ecc4602b54a2184368f440cac33e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/b4a135c7db56ecc4602b54a2184368f440cac33e",
+                "reference": "b4a135c7db56ecc4602b54a2184368f440cac33e",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": ">=2.2,<2.5-dev",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "doctrine/orm": ">=2.2,<2.5-dev"
+            },
+            "suggest": {
+                "doctrine/mongodb-odm": "For loading MongoDB ODM fixtures",
+                "doctrine/orm": "For loading ORM fixtures",
+                "doctrine/phpcr-odm": "For loading PHPCR ODM fixtures"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\DataFixtures": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com",
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
+                }
+            ],
+            "description": "Data Fixtures for all Doctrine Object Managers",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "database"
+            ],
+            "time": "2013-07-10 17:04:07"
+        },
+        {
             "name": "doctrine/dbal",
             "version": "v2.5.0",
             "source": {
@@ -582,6 +638,66 @@
                 "caching"
             ],
             "time": "2014-11-28 09:43:36"
+        },
+        {
+            "name": "doctrine/doctrine-fixtures-bundle",
+            "version": "v2.2.0",
+            "target-dir": "Doctrine/Bundle/FixturesBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
+                "reference": "c811f96f0cf83b997e3a3ed037cac729bbe3e803"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/c811f96f0cf83b997e3a3ed037cac729bbe3e803",
+                "reference": "c811f96f0cf83b997e3a3ed037cac729bbe3e803",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/data-fixtures": "~1.0",
+                "doctrine/doctrine-bundle": "~1.0",
+                "php": ">=5.3.2",
+                "symfony/doctrine-bridge": "~2.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Bundle\\FixturesBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Doctrine Project",
+                    "homepage": "http://www.doctrine-project.org"
+                }
+            ],
+            "description": "Symfony DoctrineFixturesBundle",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "Fixture",
+                "persistence"
+            ],
+            "time": "2013-09-05 11:23:37"
         },
         {
             "name": "doctrine/inflector",
@@ -1338,17 +1454,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v3.0.14",
+            "version": "v3.0.15",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "dc20d5ab3251587b047859ca2fc06c1b88a38d00"
+                "reference": "0692cd6a8fcf645abce8ea45f7cbbd1942e2b23c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/dc20d5ab3251587b047859ca2fc06c1b88a38d00",
-                "reference": "dc20d5ab3251587b047859ca2fc06c1b88a38d00",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/0692cd6a8fcf645abce8ea45f7cbbd1942e2b23c",
+                "reference": "0692cd6a8fcf645abce8ea45f7cbbd1942e2b23c",
                 "shasum": ""
             },
             "require": {
@@ -1387,7 +1503,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-12-30 08:41:47"
+            "time": "2015-01-07 07:13:43"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -1723,23 +1839,23 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.6.1",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "d805dfd67950848ec0338b4acd75777b340977b7"
+                "reference": "c34ef418015793a4653f2670afb69dd167ebf578"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/d805dfd67950848ec0338b4acd75777b340977b7",
-                "reference": "d805dfd67950848ec0338b4acd75777b340977b7",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/c34ef418015793a4653f2670afb69dd167ebf578",
+                "reference": "c34ef418015793a4653f2670afb69dd167ebf578",
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": "~2.2",
+                "doctrine/common": "~2.3",
                 "php": ">=5.3.3",
                 "psr/log": "~1.0",
-                "twig/twig": "~1.12"
+                "twig/twig": "~1.12,>=1.12.3"
             },
             "replace": {
                 "symfony/browser-kit": "self.version",
@@ -1795,7 +1911,7 @@
                 "egulias/email-validator": "~1.2",
                 "ircmaxell/password-compat": "~1.0",
                 "monolog/monolog": "~1.11",
-                "ocramius/proxy-manager": ">=0.3.1,<0.6-dev",
+                "ocramius/proxy-manager": "~0.4|~1.0",
                 "propel/propel1": "~1.6"
             },
             "type": "library",
@@ -1835,7 +1951,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-12-03 16:40:43"
+            "time": "2015-01-07 14:47:29"
         },
         {
             "name": "twbs/bootstrap",
@@ -1899,10 +2015,14 @@
                     "dev-master": "3.3.x-dev"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
+                {
+                    "name": "Mark Otto"
+                },
                 {
                     "name": "Thomas McDonald"
                 },
@@ -1916,9 +2036,6 @@
                     "name": "Gleb Mazovetskiy"
                 },
                 {
-                    "name": "Mark Otto"
-                },
-                {
                     "name": "Jacob Thornton"
                 }
             ],
@@ -1929,10 +2046,6 @@
                 "css",
                 "sass"
             ],
-            "support": {
-                "issues": "https://github.com/twbs/bootstrap-sass/issues",
-                "source": "https://github.com/twbs/bootstrap-sass/tree/v3.3.1"
-            },
             "time": "2014-11-12 17:19:30"
         },
         {
