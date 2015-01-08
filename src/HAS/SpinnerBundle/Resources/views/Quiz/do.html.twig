@@ -16,9 +16,9 @@
             <div class="col-md-12 column">
                 <div class="tabbable" id="tabs-989870">
                     <ul class="nav nav-tabs">
-                        {% for section in sections %}
+                        {% for category in categories %}
                             <li {% if loop.first %}class="active"{% endif %}>
-                                <a href="#panel-{{ section.id }}" data-toggle="tab">{{ section.title }}</a>
+                                <a href="#panel-{{ category.id }}" data-toggle="tab">{{ category.name }}</a>
                             </li>
                         {% endfor %}
 
@@ -31,21 +31,21 @@
                     </ul>
 
                     <div class="tab-content">
-                        {% for section in sections %}
-                        <div class="tab-pane {% if loop.first %}active{% endif %}" id="panel-{{ section.id }}"
+                        {% for category in categories %}
+                        <div class="tab-pane {% if loop.first %}active{% endif %}" id="panel-{{ category.id }}"
                              data-quiz-section-container
                              data-quiz-section-result=""
-                             data-quiz-section="{{ section.id }}">
-                            {% for category in section.categories %}
+                             data-quiz-section="{{ category.id }}">
+                            {% for section in category.sections %}
                                 <div class="row clearfix">
                                     <div class="col-md-12 column"
                                          data-quiz-category-container
-                                         data-quiz-category="{{ category.id }}"
-                                         data-quiz-category-title="{{ category.title }}"
+                                         data-quiz-category="{{ section.id }}"
+                                         data-quiz-category-title="{{ section.name }}"
                                          data-quiz-category-result="">
-                                        <h2>{{ category.title }} (Score <span
+                                        <h2>{{ section.name }} (Score <span
                                                     data-quiz-category-result-container
-                                                    data-quiz-category="{{ category.id }}"></span>%)</h2>
+                                                    data-quiz-category="{{ section.id }}"></span>%)</h2>
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -55,18 +55,19 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for question in category.questions %}
+                                            {% for question in section.questions %}
                                                 <tr>
-                                                    <td>{{ question.text }}</td>
-                                                    <td>{{ question.weight }}%</td>
+                                                    <td>{{ question.name }}</td>
+                                                    <td>{% set counter = 1/section.questions|length*100 %} {{ counter|number_format }}%</td>
                                                     <td>
                                                         <select name="question_{{ question.id }}"
                                                                 data-quiz-question="{{ question.id }}"
-                                                                data-quiz-weight="{{ question.weight }}">
+                                                                data-quiz-weight="{{ counter|number_format }}
+                                                                ">
                                                             {% for i in 0..10 %}
-                                                                <option value="{{ i*10 }}" {% if i*10 == question.value %}selected{% endif %}>
-                                                                    {{ i*10 }}%
-                                                                </option>
+                                                                {#<option value="{{ i*10 }}" {% if i*10 == question.value %}selected{% endif %}>#}
+                                                                    {#{{ i*10 }}%#}
+                                                                {#</option>#}
                                                             {% endfor %}
                                                         </select>
                                                     </td>
@@ -80,29 +81,29 @@
                             <hr/>
                             <h2>Score: <span 
                                         data-quiz-section-result-container 
-                                        data-quiz-section="{{ section.id }}"></span>%</h2>
+                                        data-quiz-section="{{ category.id }}"></span>%</h2>
                         </div>
                         {% endfor %}
 
                         <div class="tab-pane" id="panel-total">
-                            {% for section in sections %}
-                            <h2>{{ section.title }}</h2>
+                            {% for category in categories %}
+                            <h2>{{ category.name }}</h2>
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th width="60%">Category</th>
+                                    <th width="60%">Section</th>
                                     <th width="20%">Max possible</th>
                                     <th width="20%">Value</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for category in section.categories %}
+                                {% for section in category.sections %}
                                 <tr>
-                                    <td>{{ category.title }}</td>
+                                    <td>{{ section.name }}</td>
                                     <td>100%</td>
                                     <td><span
                                                 data-quiz-category-result-container
-                                                data-quiz-category="{{ category.id }}"></span>%</td>
+                                                data-quiz-category="{{ section.id }}"></span>%</td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>
