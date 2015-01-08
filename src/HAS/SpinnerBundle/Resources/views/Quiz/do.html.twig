@@ -18,11 +18,13 @@
                     </ul>
 
                     <div class="tab-content">
+
                         {% for category in categories %}
                         <div class="tab-pane {% if loop.first %}active{% endif %}" id="panel-{{ category.id }}"
                              data-quiz-section-container
                              data-quiz-section-result=""
                              data-quiz-section="{{ category.id }}">
+                              <form name="custom" method="get" action="{{ path('quiz_submit') }}" role="form">
                             {% for section in category.sections %}
                                 <div class="row clearfix">
                                     <div class="col-md-12 column"
@@ -66,9 +68,11 @@
                                 </div>
                             {% endfor %}
                             <hr/>
-                            <h2>Score: <span 
-                                        data-quiz-section-result-container 
+                            <h2>Score: <span
+                                        data-quiz-section-result-container
                                         data-quiz-section="{{ category.id }}"></span>%</h2>
+                                  <input type="submit" class="btn btn-primary">
+                              </form>
                         </div>
                         {% endfor %}
 

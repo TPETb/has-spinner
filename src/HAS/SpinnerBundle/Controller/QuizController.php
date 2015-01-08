@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class QuizController
@@ -33,5 +34,13 @@ class QuizController extends Controller
         $categories = $dm->getRepository('HASSpinnerBundle:Category')->findAll();
         
         return $this->render('HASSpinnerBundle:Quiz:do.html.twig', ['categories' => $categories]);
+    }
+
+    /**
+     * @Route("quiz/submit", name="quiz_submit")
+     * @Method("GET")
+     */
+    public function submitAction(Request $request){
+        return $this->redirect($this->generateUrl('quiz_do'));
     }
 }
