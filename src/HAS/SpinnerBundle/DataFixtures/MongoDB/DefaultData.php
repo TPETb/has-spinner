@@ -16,7 +16,8 @@ use HAS\SpinnerBundle\Document\Category;
 use HAS\SpinnerBundle\Document\Question;
 use MongoDBODMProxies\__CG__\HAS\SpinnerBundle\Document\Section;
 
-class DefaultData implements FixtureInterface{
+class DefaultData implements FixtureInterface
+{
 
     /**
      * Load data fixtures with the passed EntityManager

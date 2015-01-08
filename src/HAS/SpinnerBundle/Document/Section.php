@@ -31,12 +31,13 @@ class Section {
     /**
      * @ReferenceOne(targetDocument="Category", inversedBy="sections")
      */
-    public $category;
+    protected $category;
 
     /**
      * @ReferenceMany(targetDocument="Question", mappedBy="section")
      */
-    public $questions;
+    protected $questions;
+
 
     public function __construct()
     {

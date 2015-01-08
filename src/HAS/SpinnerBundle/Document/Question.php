@@ -16,7 +16,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations\ReferenceOne;
  * @package HAS\SpinnerBundle\Document
  * @MongoDB\Document
  */
-class Question {
+class Question
+{
     /**
      * @MongoDB\Id
      */
@@ -35,7 +36,8 @@ class Question {
     /**
      * @ReferenceOne(targetDocument="Section", inversedBy="questions")
      */
-    public $section;
+    protected $section;
+
 
     /**
      * Get id
@@ -46,6 +48,7 @@ class Question {
     {
         return $this->id;
     }
+
 
     /**
      * Set name
@@ -59,6 +62,7 @@ class Question {
         return $this;
     }
 
+
     /**
      * Get name
      *
@@ -68,6 +72,7 @@ class Question {
     {
         return $this->name;
     }
+
 
     /**
      * Set category
@@ -81,6 +86,7 @@ class Question {
         return $this;
     }
 
+
     /**
      * Get category
      *
@@ -90,6 +96,7 @@ class Question {
     {
         return $this->category;
     }
+
 
     /**
      * Set section
@@ -102,6 +109,7 @@ class Question {
         $this->section = $section;
         return $this;
     }
+
 
     /**
      * Get section

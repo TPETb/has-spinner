@@ -15,7 +15,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * @package HAS\SpinnerBundle\Document
  * @MongoDB\Document
  */
-class User {
+class User
+{
     /**
      * @MongoDB\Id
      */
@@ -26,6 +27,7 @@ class User {
      */
     protected $name;
 
+
     /**
      * Get id
      *
@@ -35,6 +37,7 @@ class User {
     {
         return $this->id;
     }
+
 
     /**
      * Set name
@@ -47,6 +50,7 @@ class User {
         $this->name = $name;
         return $this;
     }
+
 
     /**
      * Get name

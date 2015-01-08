@@ -16,7 +16,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations\ReferenceMany;
  * @package HAS\SpinnerBundle\Document
  * @MongoDB\Document
  */
-class Category {
+class Category
+{
     /**
      * @MongoDB\Id
      */
@@ -30,12 +31,15 @@ class Category {
     /**
      * @ReferenceMany(targetDocument="Section", mappedBy="category")
      */
-    public $sections;
+    protected $sections;
+
+
     public function __construct()
     {
         $this->sections = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
+
     /**
      * Get id
      *
@@ -45,6 +49,7 @@ class Category {
     {
         return $this->id;
     }
+
 
     /**
      * Set name
@@ -58,6 +63,7 @@ class Category {
         return $this;
     }
 
+
     /**
      * Get name
      *
@@ -67,6 +73,7 @@ class Category {
     {
         return $this->name;
     }
+
 
     /**
      * Add section
@@ -78,6 +85,7 @@ class Category {
         $this->sections[] = $section;
     }
 
+
     /**
      * Remove section
      *
@@ -87,6 +95,7 @@ class Category {
     {
         $this->sections->removeElement($section);
     }
+
 
     /**
      * Get sections
@@ -98,7 +107,9 @@ class Category {
         return $this->sections;
     }
 
-    public function __toString(){
+
+    public function __toString()
+    {
         return $this->name;
     }
 }

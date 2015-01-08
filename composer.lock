@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eaa3fdaf39a327a320e9615978a68466",
+    "hash": "1fc1565bb50ab2d54bb33d97fc83d408",
     "packages": [
         {
             "name": "braincrafted/bootstrap-bundle",
@@ -2015,14 +2015,10 @@
                     "dev-master": "3.3.x-dev"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
-                {
-                    "name": "Mark Otto"
-                },
                 {
                     "name": "Thomas McDonald"
                 },
@@ -2036,6 +2032,9 @@
                     "name": "Gleb Mazovetskiy"
                 },
                 {
+                    "name": "Mark Otto"
+                },
+                {
                     "name": "Jacob Thornton"
                 }
             ],
@@ -2046,6 +2045,10 @@
                 "css",
                 "sass"
             ],
+            "support": {
+                "issues": "https://github.com/twbs/bootstrap-sass/issues",
+                "source": "https://github.com/twbs/bootstrap-sass/tree/v3.3.1"
+            },
             "time": "2014-11-12 17:19:30"
         },
         {
