@@ -28,16 +28,14 @@ class Question {
     protected $name;
 
     /**
-     * @ReferenceOne(targetDocument="Category", inversedBy="section")
+     * @ReferenceOne(targetDocument="Category")
      */
     protected $category;
 
     /**
-     * @ReferenceOne(targetDocument="Section", inversedBy="category")
+     * @ReferenceOne(targetDocument="Section", inversedBy="questions")
      */
     public $section;
-
-
 
     /**
      * Get id

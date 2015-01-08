@@ -37,6 +37,7 @@ class Section {
      * @ReferenceMany(targetDocument="Question", mappedBy="section")
      */
     public $questions;
+
     public function __construct()
     {
         $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
