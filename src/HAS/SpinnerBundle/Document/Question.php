@@ -29,6 +29,11 @@ class Question
     protected $name;
 
     /**
+     * @MongoDB\Int
+     */
+    protected $weight;
+
+    /**
      * @ReferenceOne(targetDocument="Category")
      */
     protected $category;
@@ -119,5 +124,27 @@ class Question
     public function getSection()
     {
         return $this->section;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param int $weight
+     * @return self
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return int $weight
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }
