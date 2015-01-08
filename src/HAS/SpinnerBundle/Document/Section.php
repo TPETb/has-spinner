@@ -85,4 +85,12 @@ class Section {
     {
         return $this->category;
     }
+
+    public function getCategories(){
+        return $this->category;
+    }
+
+    public function __toString(){
+        return $this->getName();
+    }
 }

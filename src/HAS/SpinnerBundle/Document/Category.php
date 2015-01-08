@@ -86,6 +86,10 @@ class Category {
         return $this->section;
     }
 
+    public function categories(){
+        return $this->section;
+    }
+
     public function __toString(){
         return $this->getName();
     }
