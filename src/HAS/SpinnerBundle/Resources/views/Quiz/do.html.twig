@@ -197,10 +197,9 @@
                         data.datasets[0].data.push($(this).data('quiz-category-result'));
                         data.datasets[1].data.push(100);
                     });
-                    console.log(data);
                     // Draw the spinner
                     options = {
-                        animation: false,
+                        animation: false
                     };
                     var chartRadar = new Chart(ctx).Radar(data, options);
                 }.bind(this), 100);
