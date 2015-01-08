@@ -13,13 +13,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $user = new User();
-        $user->setName("test name");
-
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($user);
-        $dm->flush();
-
-        return $this->render('default/index.html.twig', array('user_id'=>$user->getId()));
+        return $this->render('default/index.html.twig');
     }
 }
