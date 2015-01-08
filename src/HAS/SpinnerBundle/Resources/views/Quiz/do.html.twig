@@ -1,114 +1,114 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-                <div class="tabbable" id="tabs-989870">
-                    <ul class="nav nav-tabs">
-                        {% for category in categories %}
-                            <li {% if loop.first %}class="active"{% endif %}>
-                                <a href="#panel-{{ category.id }}" data-toggle="tab">{{ category.name }}</a>
-                            </li>
-                        {% endfor %}
+<form name="custom" method="get" action="{{ path('quiz_submit') }}" role="form">
+    <div class="tabbable" id="tabs-989870">
+        <ul class="nav nav-tabs">
+            {% for category in categories %}
+                <li {% if loop.first %}class="active"{% endif %}>
+                    <a href="#panel-{{ category.id }}" data-toggle="tab">{{ category.name }}</a>
+                </li>
+            {% endfor %}
 
-                        <li>
-                            <a href="#panel-total" data-toggle="tab">Soll-Ist-Vergleich</a>
-                        </li>
-                        <li>
-                            <a href="#panel-spinner" data-toggle="tab" data-quiz-spinner-toggler>Spinne</a>
-                        </li>
-                    </ul>
+            <li>
+                <a href="#panel-total" data-toggle="tab">Soll-Ist-Vergleich</a>
+            </li>
+            <li>
+                <a href="#panel-spinner" data-toggle="tab" data-quiz-spinner-toggler>Spinne</a>
+            </li>
+        </ul>
 
-                    <div class="tab-content">
+        <div class="tab-content">
 
-                        {% for category in categories %}
-                        <div class="tab-pane {% if loop.first %}active{% endif %}" id="panel-{{ category.id }}"
-                             data-quiz-section-container
-                             data-quiz-section-result=""
-                             data-quiz-section="{{ category.id }}">
-                              <form name="custom" method="get" action="{{ path('quiz_submit') }}" role="form">
-                            {% for section in category.sections %}
-                                <div class="row clearfix">
-                                    <div class="col-md-12 column"
-                                         data-quiz-category-container
-                                         data-quiz-category="{{ section.id }}"
-                                         data-quiz-category-title="{{ section.name }}"
-                                         data-quiz-category-result="">
-                                        <h2>{{ section.name }} (Score <span
-                                                    data-quiz-category-result-container
-                                                    data-quiz-category="{{ section.id }}"></span>%)</h2>
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th width="60%">Question</th>
-                                                <th width="20%">Weight</th>
-                                                <th width="20%">Value</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for question in section.questions %}
-                                                <tr>
-                                                    <td>{{ question.name }}</td>
-                                                    <td>{% set counter = 1/section.questions|length*100 %} {{ counter|number_format }}%</td>
-                                                    <td>
-                                                        <select name="question_{{ question.id }}"
-                                                                data-quiz-question="{{ question.id }}"
-                                                                data-quiz-weight="{{ counter|number_format }}
+            {% for category in categories %}
+                <div class="tab-pane {% if loop.first %}active{% endif %}" id="panel-{{ category.id }}"
+                     data-quiz-section-container
+                     data-quiz-section-result=""
+                     data-quiz-section="{{ category.id }}">
+                    {% for section in category.sections %}
+                        <div class="row clearfix">
+                            <div class="col-md-12 column"
+                                 data-quiz-category-container
+                                 data-quiz-category="{{ section.id }}"
+                                 data-quiz-category-title="{{ section.name }}"
+                                 data-quiz-category-result="">
+                                <h2>{{ section.name }} (Score <span
+                                            data-quiz-category-result-container
+                                            data-quiz-category="{{ section.id }}"></span>%)</h2>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th width="60%">Question</th>
+                                        <th width="20%">Weight</th>
+                                        <th width="20%">Value</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for question in section.questions %}
+                                        <tr>
+                                            <td>{{ question.name }}</td>
+                                            <td>{% set counter = 1/section.questions|length*100 %} {{ counter|number_format }}
+                                                %
+                                            </td>
+                                            <td>
+                                                <select name="question_{{ question.id }}"
+                                                        data-quiz-question="{{ question.id }}"
+                                                        data-quiz-weight="{{ counter|number_format }}
                                                                 ">
-                                                            {% for i in 0..10 %}
-                                                                <option value="{{ i*10 }}" {% if question.value is defined and i*10 == question.value %}selected{% endif %}>
-                                                                    {{ i*10 }}%
-                                                                </option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                            <hr/>
-                            <h2>Score: <span
-                                        data-quiz-section-result-container
-                                        data-quiz-section="{{ category.id }}"></span>%</h2>
-                                  <input type="submit" class="btn btn-primary">
-                              </form>
+                                                    {% for i in 0..10 %}
+                                                        <option value="{{ i*10 }}" {% if question.value is defined and i*10 == question.value %}selected{% endif %}>
+                                                            {{ i*10 }}%
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        {% endfor %}
-
-                        <div class="tab-pane" id="panel-total">
-                            {% for category in categories %}
-                            <h2>{{ category.name }}</h2>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th width="60%">Section</th>
-                                    <th width="20%">Max possible</th>
-                                    <th width="20%">Value</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for section in category.sections %}
-                                <tr>
-                                    <td>{{ section.name }}</td>
-                                    <td>100%</td>
-                                    <td><span
-                                                data-quiz-category-result-container
-                                                data-quiz-category="{{ section.id }}"></span>%</td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            {% endfor %}
-                        </div>
-
-                        <div class="tab-pane" id="panel-spinner" data-quiz-spinner-container>
-                        </div>
-                    </div>
+                    {% endfor %}
+                    <hr/>
+                    <h2>Score: <span
+                                data-quiz-section-result-container
+                                data-quiz-section="{{ category.id }}"></span>%</h2>
+                    <input type="submit" class="btn btn-primary">
                 </div>
+            {% endfor %}
+
+            <div class="tab-pane" id="panel-total">
+                {% for category in categories %}
+                    <h2>{{ category.name }}</h2>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th width="60%">Section</th>
+                            <th width="20%">Max possible</th>
+                            <th width="20%">Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for section in category.sections %}
+                            <tr>
+                                <td>{{ section.name }}</td>
+                                <td>100%</td>
+                                <td><span
+                                            data-quiz-category-result-container
+                                            data-quiz-category="{{ section.id }}"></span>%
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
+            </div>
+
+            <div class="tab-pane" id="panel-spinner" data-quiz-spinner-container>
             </div>
         </div>
     </div>
+</form>
 {% endblock %}
 
 {% block javascripts %}
@@ -125,7 +125,7 @@
                     score += $(this).val() * $(this).data('quiz-weight') / 100;
                 });
                 // Update category score
-                $('*[data-quiz-category-result-container][data-quiz-category='+categoryContainer.data('quiz-category')+']').text(Math.round(score));
+                $('*[data-quiz-category-result-container][data-quiz-category=' + categoryContainer.data('quiz-category') + ']').text(Math.round(score));
                 categoryContainer.data('quiz-category-result', Math.round(score));
 
                 // Find section container
@@ -138,7 +138,7 @@
                 // Count categories and divide the score correspondingly
                 score /= sectionContainer.find('*[data-quiz-category-container]').length;
                 // Update section score
-                $('*[data-quiz-section-result-container][data-quiz-section='+sectionContainer.data('quiz-section')+']').text(Math.round(score));
+                $('*[data-quiz-section-result-container][data-quiz-section=' + sectionContainer.data('quiz-section') + ']').text(Math.round(score));
                 sectionContainer.data('quiz-section-result', Math.round(score));
             });
 
@@ -147,13 +147,13 @@
             // though it is only needed to trigger once per category
             $('select[data-quiz-question]').trigger('change.quiz');
 
-            $('*[data-quiz-spinner-toggler]').on('click.quiz', function(){
+            $('*[data-quiz-spinner-toggler]').on('click.quiz', function () {
                 // Delay to be sure the tab opens
-                setTimeout(function(){
+                setTimeout(function () {
                     // Clear container
                     $('*[data-quiz-spinner-container]').empty();
                     // Add square full width canvas to container
-                    var canvas = $('<canvas width="'+$('*[data-quiz-spinner-container]').width()+'" height="'+$('*[data-quiz-spinner-container]').width()+'">');
+                    var canvas = $('<canvas width="' + $('*[data-quiz-spinner-container]').width() + '" height="' + $('*[data-quiz-spinner-container]').width() + '">');
                     var ctx = $(canvas).get(0).getContext('2d');
                     $('*[data-quiz-spinner-container]').append(canvas);
 
@@ -184,7 +184,7 @@
                         ]
                     };
                     // Collect data to display
-                    $('*[data-quiz-category-container]').each(function(){
+                    $('*[data-quiz-category-container]').each(function () {
                         data.labels.push($(this).data('quiz-category-title'));
                         data.datasets[0].data.push($(this).data('quiz-category-result'));
                         data.datasets[1].data.push(100);
