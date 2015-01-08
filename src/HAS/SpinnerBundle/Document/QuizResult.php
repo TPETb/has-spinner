@@ -16,7 +16,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations\ReferenceOne;
  * @package HAS\SpinnerBundle\Document
  * @MongoDB\Document
  */
-class QuizResult {
+class QuizResult
+{
 
     /**
      * @MongoDB\Id
@@ -28,6 +29,7 @@ class QuizResult {
      */
     protected $datePassing;
 
+
     /** @ReferenceOne(targetDocument="User") */
     protected $user;
 
@@ -35,6 +37,7 @@ class QuizResult {
      * @MongoDB\String
      */
     protected $result;
+
 
     /**
      * Get id
@@ -45,6 +48,7 @@ class QuizResult {
     {
         return $this->id;
     }
+
 
     /**
      * Set datePassing
@@ -58,6 +62,7 @@ class QuizResult {
         return $this;
     }
 
+
     /**
      * Get datePassing
      *
@@ -67,6 +72,7 @@ class QuizResult {
     {
         return $this->datePassing;
     }
+
 
     /**
      * Set user
@@ -80,6 +86,7 @@ class QuizResult {
         return $this;
     }
 
+
     /**
      * Get user
      *
@@ -89,6 +96,7 @@ class QuizResult {
     {
         return $this->user;
     }
+
 
     /**
      * Set result
@@ -101,6 +109,7 @@ class QuizResult {
         $this->result = $result;
         return $this;
     }
+
 
     /**
      * Get result

@@ -9,6 +9,7 @@
 namespace HAS\SpinnerBundle\Controller;
 
 
+use HAS\SpinnerBundle\Document\QuizResult;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -70,6 +71,10 @@ class QuizController extends Controller
             }
             $categoriesArray[] = $tmp;
         }
+
+        $result = new QuizResult();
+        $result->setDatePassing(new \DateTime());
+        $result->setResult(json_encode($categoriesArray));
         print_r($categoriesArray);
         exit();
 
