@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<form name="custom" method="get" action="{{ path('quiz_submit') }}" role="form">
+<form name="custom" method="post" action="{{ path('quiz_submit') }}" role="form">
     <div class="tabbable" id="tabs-989870">
         <ul class="nav nav-tabs">
             {% for category in categories %}
@@ -47,13 +47,11 @@
                                     {% for question in section.questions %}
                                         <tr>
                                             <td>{{ question.name }}</td>
-                                            <td>{% set counter = 1/section.questions|length*100 %} {{ counter|number_format }}
-                                                %
-                                            </td>
+                                            <td>{{ question.weight }}%</td>
                                             <td>
                                                 <select name="question_{{ question.id }}"
                                                         data-quiz-question="{{ question.id }}"
-                                                        data-quiz-weight="{{ counter|number_format }}
+                                                        data-quiz-weight="{{ question.weight }}
                                                                 ">
                                                     {% for i in 0..10 %}
                                                         <option value="{{ i*10 }}" {% if question.value is defined and i*10 == question.value %}selected{% endif %}>
@@ -73,7 +71,6 @@
                     <h2>Score: <span
                                 data-quiz-section-result-container
                                 data-quiz-section="{{ category.id }}"></span>%</h2>
-                    <input type="submit" class="btn btn-primary">
                 </div>
             {% endfor %}
 
@@ -108,6 +105,7 @@
             </div>
         </div>
     </div>
+    <input type="submit" class="btn btn-primary">
 </form>
 {% endblock %}
 

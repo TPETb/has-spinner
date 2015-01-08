@@ -32,15 +32,47 @@ class QuizController extends Controller
         $dm = $this->get('doctrine_mongodb')->getManager();
 
         $categories = $dm->getRepository('HASSpinnerBundle:Category')->findAll();
-        
+
         return $this->render('HASSpinnerBundle:Quiz:do.html.twig', ['categories' => $categories]);
     }
 
+
     /**
      * @Route("quiz/submit", name="quiz_submit")
-     * @Method("GET")
+     * @Method("POST")
      */
-    public function submitAction(Request $request){
+    public function submitAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $categories = $dm->getRepository('HASSpinnerBundle:Category')->findAll();
+
+        $categoriesArray = [];
+        foreach ($categories as $category) {
+            $tmp = [
+                'name' => $category->getName(),
+                'sections' => [],
+            ];
+            foreach ($category->getSections() as $section) {
+                $tmp1 = [
+                    'name' => $section->getName(),
+                    'questions' => [],
+                ];
+                foreach ($section->getQuestions() as $question) {
+                    $tmp2 = [
+                        'name' => $question->getName(),
+                        'weight' => $question->getWeight(),
+                        'value' => $request->get('question_'.$question->getId()),
+                    ];
+                    $tmp1['questions'][] = $tmp2;
+                }
+                $tmp['sections'][] = $tmp1;
+            }
+            $categoriesArray[] = $tmp;
+        }
+        print_r($categoriesArray);
+        exit();
+
         return $this->redirect($this->generateUrl('quiz_do'));
     }
 }
