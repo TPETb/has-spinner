@@ -9,7 +9,7 @@
 namespace HAS\SpinnerBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Doctrine\ODM\MongoDB\Mapping\Annotations\ReferenceOne;
+use Doctrine\ODM\MongoDB\Mapping\Annotations\ReferenceMany;
 
 /**
  * Class Category
@@ -28,10 +28,14 @@ class Category {
     protected $name;
 
     /**
-     * @ReferenceOne(targetDocument="Section", inversedBy="category")
+     * @ReferenceMany(targetDocument="Section", mappedBy="category")
      */
-    public $section;
-
+    public $sections;
+    public function __construct()
+    {
+        $this->sections = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -65,32 +69,36 @@ class Category {
     }
 
     /**
-     * Set section
+     * Add section
      *
      * @param HAS\SpinnerBundle\Document\Section $section
-     * @return self
      */
-    public function setSection(\HAS\SpinnerBundle\Document\Section $section)
+    public function addSection(\HAS\SpinnerBundle\Document\Section $section)
     {
-        $this->section = $section;
-        return $this;
+        $this->sections[] = $section;
     }
 
     /**
-     * Get section
+     * Remove section
      *
-     * @return HAS\SpinnerBundle\Document\Section $section
+     * @param HAS\SpinnerBundle\Document\Section $section
      */
-    public function getSection()
+    public function removeSection(\HAS\SpinnerBundle\Document\Section $section)
     {
-        return $this->section;
+        $this->sections->removeElement($section);
     }
 
-    public function categories(){
-        return $this->section;
+    /**
+     * Get sections
+     *
+     * @return Doctrine\Common\Collections\Collection $sections
+     */
+    public function getSections()
+    {
+        return $this->sections;
     }
 
     public function __toString(){
-        return $this->getName();
+        return $this->name;
     }
 }

@@ -10,6 +10,7 @@ namespace HAS\SpinnerBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\ODM\MongoDB\Mapping\Annotations\ReferenceOne;
+use Doctrine\ODM\MongoDB\Mapping\Annotations\ReferenceMany;
 
 /**
  * Class Section
@@ -28,10 +29,19 @@ class Section {
     protected $name;
 
     /**
-     * @ReferenceOne(targetDocument="Category", inversedBy="section")
+     * @ReferenceOne(targetDocument="Category", inversedBy="sections")
      */
-    protected $category;
+    public $category;
 
+    /**
+     * @ReferenceMany(targetDocument="Question", mappedBy="section")
+     */
+    public $questions;
+    public function __construct()
+    {
+        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -86,11 +96,37 @@ class Section {
         return $this->category;
     }
 
-    public function getCategories(){
-        return $this->category;
+    /**
+     * Add question
+     *
+     * @param HAS\SpinnerBundle\Document\Question $question
+     */
+    public function addQuestion(\HAS\SpinnerBundle\Document\Question $question)
+    {
+        $this->questions[] = $question;
+    }
+
+    /**
+     * Remove question
+     *
+     * @param HAS\SpinnerBundle\Document\Question $question
+     */
+    public function removeQuestion(\HAS\SpinnerBundle\Document\Question $question)
+    {
+        $this->questions->removeElement($question);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return Doctrine\Common\Collections\Collection $questions
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
     }
 
     public function __toString(){
-        return $this->getName();
+        return $this->name;
     }
 }
