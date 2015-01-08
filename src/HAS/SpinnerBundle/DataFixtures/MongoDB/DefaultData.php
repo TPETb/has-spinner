@@ -15,6 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use HAS\SpinnerBundle\Document\Category;
 use HAS\SpinnerBundle\Document\Question;
 use HAS\SpinnerBundle\Document\Section;
+use HAS\SpinnerBundle\Document\User;
 
 class DefaultData implements FixtureInterface
 {
@@ -539,6 +540,9 @@ class DefaultData implements FixtureInterface
             ],
         ];
 
+        $user = new User();
+        $user->setName('test-user');
+
         foreach ($categories as $category) {
             $categoryDoc = new Category();
             $categoryDoc->setName($category->title);
@@ -557,6 +561,8 @@ class DefaultData implements FixtureInterface
                 }
             }
         }
+
+        $manager->persist($user);
 
         $manager->flush();
     }

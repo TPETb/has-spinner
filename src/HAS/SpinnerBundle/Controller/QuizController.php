@@ -47,6 +47,7 @@ class QuizController extends Controller
         $dm = $this->get('doctrine_mongodb')->getManager();
 
         $categories = $dm->getRepository('HASSpinnerBundle:Category')->findAll();
+        $user = $dm->getRepository('HASSpinnerBundle:User')->findOneBy(array('name'=>'test-user'));
 
         $categoriesArray = [];
         foreach ($categories as $category) {
@@ -73,10 +74,12 @@ class QuizController extends Controller
         }
 
         $result = new QuizResult();
-        $result->setDatePassing(new \DateTime());
+        $date = new \DateTime();
+        $result->setDatePassing($date->getTimestamp());
         $result->setResult(json_encode($categoriesArray));
-        print_r($categoriesArray);
-        exit();
+        $result->setUser($user);
+        $dm->persist($result);
+        $dm->flush();
 
         return $this->redirect($this->generateUrl('quiz_do'));
     }
