@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Quiz results</h1>
+    <table style="text-align: center;" class="table table-striped">
+        <thead>
+        <tr>
+            <td width="50%;">
+                <b>Passing date</b>
+            </td>
+            <td width="50%;">
+                <b>Link</b>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for result in results %}
+            <tr>
+                <td>{{ result.datePassing|date }}</td>
+                <td><a href="{{ path('quiz_view', {'id': result.id}) }}">View</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
